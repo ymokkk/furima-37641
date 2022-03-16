@@ -2,16 +2,16 @@
 
 ## usersテーブル
 
-| Column         | Type   | Options     |
-| -------------- | -------| ----------- |
-| nickname       | string | null: false |
-| email          | string | null: false |
-| password       | string | null: false |
-| last_name      | string | null: false |
-| first_name     | string | null: false |
-| lastname_kana  | string | null: false |
-| firstname_kana | string | null: false |
-| birthday       | date   | null: false |
+| Column             | Type   | Options                  |
+| ------------------ | -------| ------------------------ |
+| nickname           | string | null: false              |
+| email              | string | null: false, unique:true |
+| encrypted_password | string | null: false              |
+| last_name          | string | null: false              |
+| first_name         | string | null: false              |
+| lastname_kana      | string | null: false              |
+| firstname_kana     | string | null: false              |
+| birthday           | date   | null: false              |
 
 ## Association
 -has_many :items
@@ -20,18 +20,17 @@
 
 ## itemsテーブル
 
-| Column       | Type       | Options                        |
-| ------------ | ---------- | ------------------------------ |
-| image        | string     | null: false                    |
-| item_name    | string     | null: false                    |
-| explanation  | text       | null: false                    |
-| category     | integer    | null: false                    |
-| status       | integer    | null: false                    |
-| delivery     | integer    | null: false                    |
-| area         | integer    | null: false                    |
-| days         | integer    | null: false                    |
-| price        | integer    | null: false                    |
-| user_id      | references | null: false, foreign_key: true |
+| Column          | Type       | Options                        |
+| --------------- | ---------- | ------------------------------ |
+| item_name       | string     | null: false                    |
+| explanation     | text       | null: false                    |
+| category_id     | integer    | null: false                    |
+| status_id       | integer    | null: false                    |
+| delivery_id     | integer    | null: false                    |
+| area_id         | integer    | null: false                    |
+| shipping_day_id | integer    | null: false                    |
+| price           | integer    | null: false                    |
+| user            | references | null: false, foreign_key: true |
 
 ## Association
 -has_many :comments
@@ -43,8 +42,8 @@
 | Column   | Type       | Options                        |
 | -------- | ---------- | ------------------------------ |
 | message  | string     | null: false                    |
-| user_id  | references | null: false, foreign_key: true |
-| item_id  | references | null: false, foreign_key: true |
+| user     | references | null: false, foreign_key: true |
+| item     | references | null: false, foreign_key: true |
 
 ## Association
 -belongs_to :user
@@ -54,8 +53,8 @@
 
 | Column   | Type       | Options                        |
 | -------- | ---------- | ------------------------------ |
-| user_id  | references | null: false, foreign_key: true |
-| item_id  | references | null: false, foreign_key: true |
+| user     | references | null: false, foreign_key: true |
+| item     | references | null: false, foreign_key: true |
 
 ## Association
 -belongs_to :user
@@ -67,12 +66,12 @@
 | Column         | Type          | Options                        |
 | -------------- | ------------- | ------------------------------ |
 | address_number | string        | null: false                    |
-| todofuken      | integer       | null: false                    |
+| area_id        | integer       | null: false                    |
 | sichoson       | string        | null: false                    |
 | banchi         | string        | null: false                    |
 | building       | string        |                                |
 | phone_number   | string        | null: false                    |
-| order_user     | references    | null: false, foreign_key: true |
+| user           | references    | null: false, foreign_key: true |
 
 ## Association
 -belongs_to :order
