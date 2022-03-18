@@ -15,6 +15,7 @@ class Item < ApplicationRecord
     validates :image
     validates :item_name
     validates :explanation
+    validates :price
   end
 
   with_options presence: true, numericality: { other_than: 1 , message: "can't be blank" } do
@@ -25,5 +26,6 @@ class Item < ApplicationRecord
   validates :shipping_day_id
   end
 
-  validates :price, presence: true, format: {with: /\A[0-9]+\z/, message: "Half-width number" }, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "Out of setting range"}
+  validates :price, numericality: {with: /\A[0-9]+\z/, message: "is invalid. Input half-width characters." }
+  validates :price, numericality: { greater_than_or_equal_to: 300, less_than_or_equal_to: 9999999, message: "is out of setting range"}
 end
