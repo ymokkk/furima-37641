@@ -3,25 +3,24 @@ class User < ApplicationRecord
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
-         
 
-  #has_many :items
-  #has_many :comments
-  #has_many :orders
+  has_many :items
+  # has_many :comments
+  # has_many :orders
 
   with_options presence: true do
-         validates :nickname
-         with_options format: {with: /\A[ぁ-んァ-ヶ一-龥々]+\z/, message: "is invalid. Input full-width characters."} do
-         validates :last_name
-         validates :first_name
-         end
-         with_options format: {with: /\A[ァ-ヶー－]+\z/, message: "is invalid. Input full-width katakana characters."} do
-         validates :lastname_kana
-         validates :firstname_kana
-         end
-         validates :birthday
-   end
+    validates :nickname
+    with_options format: { with: /\A[ぁ-んァ-ヶ一-龥々]+\z/, message: 'is invalid. Input full-width characters.' } do
+      validates :last_name
+      validates :first_name
+    end
+    with_options format: { with: /\A[ァ-ヶー－]+\z/, message: 'is invalid. Input full-width katakana characters.' } do
+      validates :lastname_kana
+      validates :firstname_kana
+    end
+    validates :birthday
+  end
 
-PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?[\d])[a-z\d]+\z/i.freeze
-validates_format_of :password, with: PASSWORD_REGEX, message: 'is invalid. Include both letters and numbers'
+  PASSWORD_REGEX = /\A(?=.*?[a-z])(?=.*?\d)[a-z\d]+\z/i.freeze
+  validates_format_of :password, with: PASSWORD_REGEX, message: 'is invalid. Include both letters and numbers'
 end
