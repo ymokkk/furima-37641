@@ -12,7 +12,7 @@ class OrderMailing
     validates :user_id
   end
     validates :phone_number, format: {with: /\A[0-9]+\z/, message: "is invalid. Input only number"}
-    validates :phone_number, format: {with: /\A\d{10,11}\z/, message:"is too short"}
+    validates :phone_number, format: {with: /\A0[0-9]{9,10}\z/, message:"is too short"}
 
   def save
     order = Order.create(user_id: user_id, item_id: item_id)
