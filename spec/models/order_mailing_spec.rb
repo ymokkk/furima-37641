@@ -10,7 +10,7 @@ RSpec.describe OrderMailing, type: :model do
 
   describe '購入内容の確認' do
     context '商品購入がうまくいくとき' do
-      it '全ての値が正しく入力されていれば保存できること' do
+      it 'tokenや全ての値が正しく入力されていれば保存できること' do
         expect(@order_mailing).to be_valid
       end
       it 'buildingは空でも保存できる' do
@@ -19,6 +19,11 @@ RSpec.describe OrderMailing, type: :model do
       end
     end
     context '商品購入がうまくいかないとき' do
+      it 'tokenが空では登録できないこと' do
+        @order_mailing.token = nil
+        @order_mailing.valid?
+        expect(@order_mailing.errors.full_messages).to include("Token can't be blank")
+      end
       it 'address_numberが空では保存できない' do
         @order_mailing.address_number = nil
         @order_mailing.valid?

@@ -1,6 +1,6 @@
 class OrderMailing
   include ActiveModel::Model
-  attr_accessor :address_number, :area_id, :sichoson, :banchi, :building, :phone_number, :item_id, :user_id
+  attr_accessor :address_number, :area_id, :sichoson, :banchi, :building, :phone_number, :item_id, :user_id, :token
 
   with_options presence: true do
     validates :address_number, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Enter it as follows (e.g. 123-4567)"}
@@ -10,6 +10,7 @@ class OrderMailing
     validates :phone_number
     validates :item_id
     validates :user_id
+    validates :token
   end
     validates :phone_number, format: {with: /\A[0-9]+\z/, message: "is invalid. Input only number"}
     validates :phone_number, format: {with: /\A0[0-9]{9,10}\z/, message:"is too short"}
