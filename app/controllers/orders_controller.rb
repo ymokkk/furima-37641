@@ -5,7 +5,6 @@ class OrdersController < ApplicationController
 
   def index
     @order_mailing = OrderMailing.new
-    redirect_to root_path if current_user == @item.user
   end
 
   def new
