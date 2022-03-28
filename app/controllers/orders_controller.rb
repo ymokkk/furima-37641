@@ -5,9 +5,7 @@ class OrdersController < ApplicationController
 
   def index
     @order_mailing = OrderMailing.new
-    if current_user == @item.user
-      redirect_to root_path
-    end
+    redirect_to root_path if current_user == @item.user
   end
 
   def new
@@ -15,25 +13,27 @@ class OrdersController < ApplicationController
 
   def create
     @order_mailing = OrderMailing.new(order_params)
-   if @order_mailing.valid?
-    pay_item
-    @order_mailing.save
-    redirect_to root_path
-   else
-    render :index
-   end
+    if @order_mailing.valid?
+      pay_item
+      @order_mailing.save
+      redirect_to root_path
+    else
+      render :index
+    end
   end
 
-private
+  private
 
   def order_params
-    params.require(:order_mailing).permit(:address_number, :area_id, :sichoson, :banchi, :building, :phone_number).merge(user_id: current_user.id, item_id: @item.id, token: params[:token]) 
+    params.require(:order_mailing).permit(:address_number, :area_id, :sichoson, :banchi, :building, :phone_number).merge(
+      user_id: current_user.id, item_id: @item.id, token: params[:token]
+    )
   end
 
   def pay_item
-    Payjp.api_key = ENV["PAYJP_SECRET_KEY"]
+    Payjp.api_key = ENV['PAYJP_SECRET_KEY']
     Payjp::Charge.create(
-      amount:@item.price,
+      amount: @item.price,
       card: order_params[:token],
       currency: 'jpy'
     )
@@ -44,8 +44,6 @@ private
   end
 
   def prevent_url
-    if @item.user_id == current_user.id || @item.order != nil
-      redirect_to root_path
-    end
+    redirect_to root_path if @item.user_id == current_user.id || !@item.order.nil?
   end
 end

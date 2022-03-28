@@ -32,7 +32,7 @@ RSpec.describe OrderMailing, type: :model do
       it 'address_numberにハイフンがないと保存できない' do
         @order_mailing.address_number = '1234567'
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include("Address number is invalid. Enter it as follows (e.g. 123-4567)")
+        expect(@order_mailing.errors.full_messages).to include('Address number is invalid. Enter it as follows (e.g. 123-4567)')
       end
       it 'area_idが未選択では保存できない' do
         @order_mailing.area_id = 1
@@ -57,12 +57,12 @@ RSpec.describe OrderMailing, type: :model do
       it 'phone_numberが全角では保存できない' do
         @order_mailing.phone_number = 'あああああああああああ'
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include("Phone number is invalid. Input only number")
+        expect(@order_mailing.errors.full_messages).to include('Phone number is invalid. Input only number')
       end
       it 'phone_numberが9文字以下では保存できない' do
         @order_mailing.phone_number = '090123456'
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include("Phone number is too short")
+        expect(@order_mailing.errors.full_messages).to include('Phone number is too short')
       end
       it 'userが紐付いていなければ保存できない' do
         @order_mailing.user_id = nil
