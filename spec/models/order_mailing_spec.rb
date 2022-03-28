@@ -64,10 +64,20 @@ RSpec.describe OrderMailing, type: :model do
         @order_mailing.valid?
         expect(@order_mailing.errors.full_messages).to include('Phone number is too short')
       end
+      it 'phone_numberが12文字以上では保存できない' do
+        @order_mailing.phone_number = '090123456789'
+        @order_mailing.valid?
+        expect(@order_mailing.errors.full_messages).to include('Phone number is too short')
+      end
       it 'userが紐付いていなければ保存できない' do
         @order_mailing.user_id = nil
         @order_mailing.valid?
         expect(@order_mailing.errors.full_messages).to include("User can't be blank")
+      end
+      it 'itemが紐付いていなければ保存できない' do
+        @order_mailing.item_id = nil
+        @order_mailing.valid?
+        expect(@order_mailing.errors.full_messages).to include("Item can't be blank")
       end
     end
   end
