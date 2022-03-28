@@ -1,8 +1,9 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
+  before_action :set_item, only: [:index, :create]
+  before_action :prevent_url, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     @order_mailing = OrderMailing.new
     if current_user == @item.user
       redirect_to root_path
@@ -13,7 +14,6 @@ class OrdersController < ApplicationController
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_mailing = OrderMailing.new(order_params)
    if @order_mailing.valid?
     pay_item
@@ -37,5 +37,15 @@ private
       card: order_params[:token],
       currency: 'jpy'
     )
+  end
+
+  def set_item
+    @item = Item.find(params[:item_id])
+  end
+
+  def prevent_url
+    if @item.user_id == current_user.id || @item.order != nil
+      redirect_to root_path
+    end
   end
 end
