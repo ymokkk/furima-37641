@@ -7,9 +7,6 @@ class OrdersController < ApplicationController
     @order_mailing = OrderMailing.new
   end
 
-  def new
-  end
-
   def create
     @order_mailing = OrderMailing.new(order_params)
     if @order_mailing.valid?
