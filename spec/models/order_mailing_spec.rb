@@ -32,12 +32,12 @@ RSpec.describe OrderMailing, type: :model do
       it 'address_numberにハイフンがないと保存できない' do
         @order_mailing.address_number = '1234567'
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include('Address number is invalid. Enter it as follows (e.g. 123-4567)')
+        expect(@order_mailing.errors.full_messages).to include('Address number が無効です。ハイフンを入れてください(例 123-4567)')
       end
       it 'area_idが未選択では保存できない' do
         @order_mailing.area_id = 1
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include("Area can't be blank")
+        expect(@order_mailing.errors.full_messages).to include("Area を選択してください")
       end
       it 'sichosonが空では保存できない' do
         @order_mailing.sichoson = nil
@@ -57,17 +57,17 @@ RSpec.describe OrderMailing, type: :model do
       it 'phone_numberが全角では保存できない' do
         @order_mailing.phone_number = 'あああああああああああ'
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include('Phone number is invalid. Input only number')
+        expect(@order_mailing.errors.full_messages).to include('Phone number が無効です。数字のみ入れてください')
       end
       it 'phone_numberが9文字以下では保存できない' do
         @order_mailing.phone_number = '090123456'
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include('Phone number is too short')
+        expect(@order_mailing.errors.full_messages).to include('Phone number の文字数が適切ではありません')
       end
       it 'phone_numberが12文字以上では保存できない' do
         @order_mailing.phone_number = '090123456789'
         @order_mailing.valid?
-        expect(@order_mailing.errors.full_messages).to include('Phone number is too short')
+        expect(@order_mailing.errors.full_messages).to include('Phone number の文字数が適切ではありません')
       end
       it 'userが紐付いていなければ保存できない' do
         @order_mailing.user_id = nil
